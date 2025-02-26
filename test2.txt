@@ -1,2 +1,6 @@
 test2
+<<<<<<< HEAD
 àdwafawfawfafaw
+=======
+ghứ geg esgseg sege
+>>>>>>> week2
