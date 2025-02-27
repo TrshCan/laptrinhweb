@@ -1,0 +1,10 @@
+test2
+<<<<<<< HEAD
+<<<<<<< HEAD
+àdwafawfawfafaw
+=======
+ghứ geg esgseg sege
+>>>>>>> week2
+=======
+ghứ geg esgseg sege  àdwafawfwa
+>>>>>>> origin/week2
