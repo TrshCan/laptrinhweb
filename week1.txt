@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 week1.txt
+=======
+week1.txt week2
+>>>>>>> week2
