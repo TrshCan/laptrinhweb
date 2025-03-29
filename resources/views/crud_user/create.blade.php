@@ -18,6 +18,20 @@
                                     @endif
                                 </div>
                                 <div class="form-group mb-3">
+                                    <input type="text" placeholder="Hobby" id="hobby" class="form-control" name="hobby"
+                                           required autofocus>
+                                    @if ($errors->has('hobby'))
+                                        <span class="text-danger">{{ $errors->first('hobby') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" placeholder="Age" id="age" class="form-control" name="age"
+                                           required autofocus>
+                                    @if ($errors->has('age'))
+                                        <span class="text-danger">{{ $errors->first('age') }}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
                                     <input type="text" placeholder="Email" id="email_address" class="form-control"
                                            name="email" required autofocus>
                                     @if ($errors->has('email'))

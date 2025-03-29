@@ -1,4 +1,5 @@
-﻿-- 1. Liệt kê các hóa đơn của khách hàng, thông tin hiển thị gồm: mã user, tên user, mã hóa đơn
+﻿--- Code for SQL Server
+-- 1. Liệt kê các hóa đơn của khách hàng, thông tin hiển thị gồm: mã user, tên user, mã hóa đơn
 SELECT u.user_id, u.user_name, o.order_id
 FROM users u, orders o
 WHERE u.user_id = o.user_id;

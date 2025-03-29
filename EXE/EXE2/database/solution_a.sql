@@ -1,4 +1,5 @@
-﻿-- 1. Lấy ra danh sách người dùng theo thứ tự tên theo Alphabet (A->Z)
+﻿---- Code for SQL Server.
+-- 1. Lấy ra danh sách người dùng theo thứ tự tên theo Alphabet (A->Z)
 SELECT * 
 FROM users 
 ORDER BY user_name ASC;
