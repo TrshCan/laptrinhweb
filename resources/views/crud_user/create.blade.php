@@ -1,58 +1,74 @@
 @extends('dashboard')
 
 @section('content')
-    <main class="signup-form">
-        <div class="cotainer">
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card">
-                        <h3 class="card-header text-center">Create User</h3>
-                        <div class="card-body">
-                            <form action="{{ route('user.postUser') }}" method="POST">
-                                @csrf
-                                <div class="form-group mb-3">
-                                    <input type="text" placeholder="Name" id="name" class="form-control" name="name"
-                                           required autofocus>
-                                    @if ($errors->has('name'))
-                                        <span class="text-danger">{{ $errors->first('name') }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" placeholder="Hobby" id="hobby" class="form-control" name="hobby"
-                                           required autofocus>
-                                    @if ($errors->has('hobby'))
-                                        <span class="text-danger">{{ $errors->first('hobby') }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" placeholder="Age" id="age" class="form-control" name="age"
-                                           required autofocus>
-                                    @if ($errors->has('age'))
-                                        <span class="text-danger">{{ $errors->first('age') }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="text" placeholder="Email" id="email_address" class="form-control"
-                                           name="email" required autofocus>
-                                    @if ($errors->has('email'))
-                                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input type="password" placeholder="Password" id="password" class="form-control"
-                                           name="password" required>
-                                    @if ($errors->has('password'))
-                                        <span class="text-danger">{{ $errors->first('password') }}</span>
-                                    @endif
-                                </div>
-                                <div class="d-grid mx-auto">
-                                    <button type="submit" class="btn btn-dark btn-block">Submit</button>
-                                </div>
-                            </form>
-                        </div>
+<main class="signup-form">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                    <!-- Header with a gradient background -->
+                    <div class="card-header p-4 text-center" style="background: linear-gradient(135deg, #007bff, #6c63ff); color: #fff;">
+                        <h3 class="mb-0">Create Your Account</h3>
+                        <p class="mb-0" style="font-size: 14px;">Fill in the information below to sign up.</p>
+                    </div>
+                    <div class="card-body bg-light p-4">
+                        <form action="{{ route('user.postUser') }}" method="POST">
+                            @csrf
+                            <!-- Name input -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" placeholder="Enter your name" id="name" class="form-control" name="name" required autofocus>
+                                @if ($errors->has('name'))
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Hobby input -->
+                            <div class="mb-3">
+                                <label for="hobby" class="form-label">Hobby</label>
+                                <input type="text" placeholder="Enter your hobby" id="hobby" class="form-control" name="hobby" required autofocus>
+                                @if ($errors->has('hobby'))
+                                <span class="text-danger">{{ $errors->first('hobby') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Age input -->
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" placeholder="Enter your age" id="age" class="form-control" name="age" required autofocus>
+                                @if ($errors->has('age'))
+                                <span class="text-danger">{{ $errors->first('age') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="mb-3">
+                                <label for="email_address" class="form-label">Email</label>
+                                <input type="email" placeholder="Enter your email" id="email_address" class="form-control" name="email" required autofocus>
+                                @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" placeholder="Enter your password" id="password" class="form-control" name="password" required>
+                                @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Submit button and login link -->
+                            <div class="d-flex justify-content-end align-items-center gap-2">
+                                <a href="{{ route('login') }}" class="text-primary" style="font-size: 14px; text-decoration: underline;">Already have an account? Login</a>
+                                <button type="submit" class="btn btn-sm btn-primary" style="width: 25%; background: linear-gradient(135deg, #6c63ff, #007bff); border: none;">Sign Up</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 @endsection
