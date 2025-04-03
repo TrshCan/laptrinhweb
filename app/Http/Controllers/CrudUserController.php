@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * CRUD User controller
@@ -57,28 +58,41 @@ class CrudUserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'hobby' => 'required',
-            'age' => 'required',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'age' => 'required|integer',
+            'github' => 'required|url',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
 
-        $data = $request->all();
-        $check = User::create([
-            'name' => $data['name'],
-            'hobby' => $data['hobby'],
-            'age' => $data['age'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+        // Handle File Upload
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('public/avatars'); // Stores in storage/app/public/avatars
+            $avatarUrl = str_replace('public/', 'storage/', $avatarPath); // Adjust the path for public access
+        } else {
+            return back()->withErrors(['avatar' => 'Failed to upload avatar']);
+        }
+
+        // Create User
+        $user = User::create([
+            'name' => $request->input('name'),
+            'avatar' => $avatarUrl, // Save the stored path
+            'age' => $request->input('age'),
+            'github' => $request->input('github'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password'))
         ]);
 
-        return redirect("login");
+        return redirect("login")->with('success', 'User created successfully!');
     }
+
+
 
     /**
      * View user detail page
      */
-    public function readUser(Request $request) {
+    public function readUser(Request $request)
+    {
         $user_id = $request->get('id');
         $user = User::find($user_id);
 
@@ -88,7 +102,8 @@ class CrudUserController extends Controller
     /**
      * Delete user by id
      */
-    public function deleteUser(Request $request) {
+    public function deleteUser(Request $request)
+    {
         $user_id = $request->get('id');
         $user = User::destroy($user_id);
 
@@ -115,27 +130,49 @@ class CrudUserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,id,'.$input['id'],
-            'password' => 'required|min:6',
+            'email' => 'required|email|unique:users,email,' . $input['id'],
+            'password' => 'nullable|min:6',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-       $user = User::find($input['id']);
-       $user->name = $input['name'];
-       $user->hobby = $input['hobby'];
-       $user->age = $input['age'];
-       $user->email = $input['email'];
-       $user->password = $input['password'];
-       $user->save();
+        $user = User::findOrFail($input['id']);
 
-        return redirect("list")->withSuccess('You have signed-in');
+        // Handle Avatar Upload
+        if ($request->hasFile('avatar')) {
+            // Delete the old avatar if exists
+            if ($user->avatar) {
+                Storage::delete('public/' . $user->avatar);
+            }
+
+            // Store new avatar
+            $avatarPath = $request->file('avatar')->store('public/avatars');
+            $avatarUrl = str_replace('public/', 'storage/', $avatarPath);
+            $user->avatar = $avatarUrl;
+        }
+
+        // Update other details
+        $user->name = $input['name'];
+        $user->age = $input['age'];
+        $user->github = $input['github'];
+        $user->email = $input['email'];
+
+        // Update password if provided
+        if (!empty($input['password'])) {
+            $user->password = Hash::make($input['password']);
+        }
+
+        $user->save();
+
+        return redirect("list")->withSuccess('User updated successfully!');
     }
+
 
     /**
      * List of users
      */
     public function listUser()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $users = User::all();
             return view('crud_user.list', ['users' => $users]);
         }
@@ -146,7 +183,8 @@ class CrudUserController extends Controller
     /**
      * Sign out
      */
-    public function signOut() {
+    public function signOut()
+    {
         Session::flush();
         Auth::logout();
 

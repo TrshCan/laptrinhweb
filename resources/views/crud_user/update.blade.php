@@ -12,25 +12,28 @@
                         <p class="mb-0" style="font-size: 14px;">Edit the information below to update the user.</p>
                     </div>
                     <div class="card-body bg-light p-4">
-                        <form action="{{ route('user.postUpdateUser') }}" method="POST">
+                        <form action="{{ route('user.postUpdateUser') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input name="id" type="hidden" value="{{$user->id}}">
-                            
+
+                            <!-- Avatar Upload -->
+                            <div class="mb-3">
+                                <label for="avatar" class="form-label">Upload New Avatar</label>
+                                <input type="file" id="avatar" class="form-control" name="avatar" accept="image/*">
+                                @if ($errors->has('avatar'))
+                                <span class="text-danger">{{ $errors->first('avatar') }}</span>
+                                @endif
+                                <br>
+                                <!-- Display current avatar -->
+                                <img src="{{ asset($user->avatar) }}" height="60px" width="60px" class="rounded-circle">
+                            </div>
+
                             <!-- Name input -->
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" placeholder="Enter name" id="name" class="form-control" name="name" value="{{ $user->name }}" required autofocus>
                                 @if ($errors->has('name'))
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
-
-                            <!-- Hobby input -->
-                            <div class="mb-3">
-                                <label for="hobby" class="form-label">Hobby</label>
-                                <input type="text" placeholder="Enter hobby" id="hobby" class="form-control" name="hobby" value="{{ $user->hobby }}" required>
-                                @if ($errors->has('hobby'))
-                                    <span class="text-danger">{{ $errors->first('hobby') }}</span>
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
 
@@ -39,7 +42,16 @@
                                 <label for="age" class="form-label">Age</label>
                                 <input type="number" placeholder="Enter age" id="age" class="form-control" name="age" value="{{ $user->age }}" required>
                                 @if ($errors->has('age'))
-                                    <span class="text-danger">{{ $errors->first('age') }}</span>
+                                <span class="text-danger">{{ $errors->first('age') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Github input -->
+                            <div class="mb-3">
+                                <label for="github" class="form-label">Github</label>
+                                <input type="text" placeholder="Enter github link" id="github" class="form-control" name="github" value="{{ $user->github }}" required>
+                                @if ($errors->has('github'))
+                                <span class="text-danger">{{ $errors->first('github') }}</span>
                                 @endif
                             </div>
 
@@ -48,7 +60,7 @@
                                 <label for="email_address" class="form-label">Email</label>
                                 <input type="email" placeholder="Enter email" id="email_address" class="form-control" name="email" value="{{ $user->email }}" required>
                                 @if ($errors->has('email'))
-                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
 
@@ -57,7 +69,7 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" placeholder="Enter password" id="password" class="form-control" name="password" required>
                                 @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
 
@@ -74,3 +86,4 @@
     </div>
 </main>
 @endsection
+@extends('footer')

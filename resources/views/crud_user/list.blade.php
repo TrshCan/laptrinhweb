@@ -19,6 +19,7 @@
                         <thead class="table-primary">
                             <tr>
                                 <th scope="col">ID</th>
+                                <th scope="col">Avatar</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Hobby</th>
                                 <th scope="col">Age</th>
@@ -30,8 +31,13 @@
                             @foreach($users as $user)
                             <tr>
                                 <td>{{ $user->id }}</td>
+                                <td>
+                                    <img src="{{ $user->avatar ? asset($user->avatar) : asset('images/default-avatar.png') }}"
+                                        height="60px" width="60px" class="rounded-circle">
+                                </td>
+
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->hobby }}</td>
+                                <td>{{ $user->github }}</td>
                                 <td>{{ $user->age }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="text-center">
@@ -69,3 +75,4 @@
     </div>
 </main>
 @endsection
+@extends('footer')

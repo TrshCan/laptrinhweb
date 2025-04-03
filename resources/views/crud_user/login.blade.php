@@ -51,3 +51,4 @@
     </div>
 </main>
 @endsection
+@extends('footer')

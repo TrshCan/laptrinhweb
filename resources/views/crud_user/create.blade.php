@@ -12,7 +12,7 @@
                         <p class="mb-0" style="font-size: 14px;">Fill in the information below to sign up.</p>
                     </div>
                     <div class="card-body bg-light p-4">
-                        <form action="{{ route('user.postUser') }}" method="POST">
+                        <form action="{{ route('user.postUser') }}" method="POST" enctype="multipart/form-data">>
                             @csrf
                             <!-- Name input -->
                             <div class="mb-3">
@@ -23,12 +23,13 @@
                                 @endif
                             </div>
 
-                            <!-- Hobby input -->
+                            <!-- Avatar input -->
+                            <!-- Avatar input -->
                             <div class="mb-3">
-                                <label for="hobby" class="form-label">Hobby</label>
-                                <input type="text" placeholder="Enter your hobby" id="hobby" class="form-control" name="hobby" required autofocus>
-                                @if ($errors->has('hobby'))
-                                <span class="text-danger">{{ $errors->first('hobby') }}</span>
+                                <label for="avatar" class="form-label">Upload Avatar</label>
+                                <input type="file" id="avatar" class="form-control" name="avatar" accept="image/*" required>
+                                @if ($errors->has('avatar'))
+                                <span class="text-danger">{{ $errors->first('avatar') }}</span>
                                 @endif
                             </div>
 
@@ -38,6 +39,15 @@
                                 <input type="number" placeholder="Enter your age" id="age" class="form-control" name="age" required autofocus>
                                 @if ($errors->has('age'))
                                 <span class="text-danger">{{ $errors->first('age') }}</span>
+                                @endif
+                            </div>
+
+                            <!-- Hobby input -->
+                            <div class="mb-3">
+                                <label for="github" class="form-label">Github</label>
+                                <input type="text" placeholder="Enter your Github link" id="github" class="form-control" name="github" required autofocus>
+                                @if ($errors->has('github'))
+                                <span class="text-danger">{{ $errors->first('github') }}</span>
                                 @endif
                             </div>
 
@@ -59,6 +69,15 @@
                                 @endif
                             </div>
 
+                            <!-- Password input -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Retype Password</label>
+                                <input type="password" placeholder="Re-enter your password" id="repassword" class="form-control" name="repassword" required>
+                                @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+
                             <!-- Submit button and login link -->
                             <div class="d-flex justify-content-end align-items-center gap-2">
                                 <a href="{{ route('login') }}" class="text-primary" style="font-size: 14px; text-decoration: underline;">Already have an account? Login</a>
@@ -72,3 +91,4 @@
     </div>
 </main>
 @endsection
+@extends('footer')
