@@ -12,7 +12,7 @@
                         <p class="mb-0" style="font-size: 14px;">Fill in the information below to sign up.</p>
                     </div>
                     <div class="card-body bg-light p-4">
-                        <form action="{{ route('user.postUser') }}" method="POST" enctype="multipart/form-data">>
+                        <form action="{{ route('user.postUser') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- Name input -->
                             <div class="mb-3">
@@ -91,4 +91,3 @@
     </div>
 </main>
 @endsection
-@extends('footer')

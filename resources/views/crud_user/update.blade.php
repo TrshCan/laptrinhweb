@@ -16,16 +16,38 @@
                             @csrf
                             <input name="id" type="hidden" value="{{$user->id}}">
 
-                            <!-- Avatar Upload -->
+                            <!-- Avatar Upload with Current and Preview -->
                             <div class="mb-3">
                                 <label for="avatar" class="form-label">Upload New Avatar</label>
-                                <input type="file" id="avatar" class="form-control" name="avatar" accept="image/*">
-                                @if ($errors->has('avatar'))
-                                <span class="text-danger">{{ $errors->first('avatar') }}</span>
-                                @endif
-                                <br>
-                                <!-- Display current avatar -->
-                                <img src="{{ asset($user->avatar) }}" height="60px" width="60px" class="rounded-circle">
+
+                                <!-- New Avatar Upload -->
+                                <div>
+                                    <input type="file" id="avatar" class="form-control" name="avatar" accept="image/*" onchange="previewNewAvatar(event)">
+                                    @if ($errors->has('avatar'))
+                                    <span class="text-danger">{{ $errors->first('avatar') }}</span>
+                                    @endif
+                                </div>
+
+                                <div  class="d-flex">
+                                    <!-- Current Avatar Display -->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div>
+                                            <p class="mb-1 text-muted">Current Avatar:</p>
+                                            <img src="{{ asset($user->avatar) }}"
+                                                alt="Current Avatar"
+                                                class="rounded-circle shadow-sm"
+                                                width="80" height="80">
+                                        </div>
+                                    </div>
+
+                                    <!-- Preview of New Avatar -->
+                                    <div class="ms-auto">
+                                        <p class="mb-1 text-muted">Preview New Avatar:</p>
+                                        <img id="newAvatarPreview" class="rounded-circle shadow-sm"
+                                            width="80" height="80"
+                                            style="display: none;" alt="New Avatar Preview">
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Name input -->
@@ -85,5 +107,19 @@
         </div>
     </div>
 </main>
+
+<!-- JavaScript for Avatar Preview -->
+<script>
+    function previewNewAvatar(event) {
+        const preview = document.getElementById('newAvatarPreview');
+        const file = event.target.files[0];
+
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        } else {
+            preview.style.display = "none";
+        }
+    }
+</script>
 @endsection
-@extends('footer')

@@ -21,7 +21,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Avatar</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Hobby</th>
+                                <th scope="col">Github</th>
                                 <th scope="col">Age</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Action</th>
@@ -32,12 +32,15 @@
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>
-                                    <img src="{{ $user->avatar ? asset($user->avatar) : asset('images/default-avatar.png') }}"
+                                    <img src="{{ asset($user->avatar) }}"
                                         height="60px" width="60px" class="rounded-circle">
                                 </td>
-
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->github }}</td>
+                                <td class="text-truncate" style="max-width: 250px;">
+                                    <a href="{{ $user->github }}" class="d-inline-block text-truncate" style="max-width: 100%;">
+                                        {{ $user->github }}
+                                    </a>
+                                </td>
                                 <td>{{ $user->age }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="text-center">
@@ -75,4 +78,3 @@
     </div>
 </main>
 @endsection
-@extends('footer')
